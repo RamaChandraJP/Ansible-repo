@@ -1,0 +1,22 @@
+- name: Launch an EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: Launching Ram's instance
+      amazon.aws.ec2_instance:
+        name: "My-Ansible-EC2"
+        key_name: "my-key-pair"  # Change to your key pair name
+        instance_type: "t2.micro"
+        security_groups: "default"
+        image_id: "12345678910"  # Replace with your region’s AMI
+        region: "ap-southeast-1" #Replace with your region
+        wait: yes
+      register: ec2_info
+
+    - name: Display instance info
+      debug:
+        msg: "Ram's EC2 Instance {{ ec2_info.instance_ids }} created successfully!"
+
+
