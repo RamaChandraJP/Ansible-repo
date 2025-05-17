@@ -1,0 +1,21 @@
+---
+- name: Create an S3 bucket in AWS
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    bucket_name: "Rams-s3-1999"
+    region: "us-east-1"
+
+  tasks:
+    - name: Create S3 bucket
+      amazon.aws.aws_s3:
+        bucket: "{{ bucket_name }}"
+        mode: create
+        region: "{{ region }}"
+      register: s3_result
+
+    - name: Print result
+      debug:
+        var: s3_result
