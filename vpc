@@ -1,0 +1,26 @@
+---
+- name: Create a VPC in AWS
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    region: us-east-1
+    vpc_name: Ram-vpc
+    cidr_block: "10.0.0.0/16"
+
+  tasks:
+
+    - name: Create VPC
+      amazon.aws.ec2_vpc_net:
+        name: "{{ vpc_name }}"
+        cidr_block: "{{ cidr_block }}"
+        region: "{{ region }}"
+        tags:
+          Name: "{{ vpc_name }}"
+        state: present
+      register: vpc_result
+
+    - name: Print VPC ID
+      debug:
+        msg: "Created VPC ID: {{ vpc_result.vpc.id }}"
