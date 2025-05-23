@@ -1,0 +1,27 @@
+---
+name: installing jenkins
+hosts: all
+become: true
+tasks:
+  - name: links
+    become: true
+    shell : | attach links here
+
+- name: update
+  apt:
+    update_cache: yes
+
+- name: install java
+  apt:
+    name: openjdk17.jre
+    state: latest or present
+
+- name: install jenkins
+  apt:
+    name: jenkins
+    state: latest
+
+- name: start service
+  service:
+    name: jenkins
+    state: started
